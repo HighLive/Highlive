@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 @Controller
 public class DomainController {
@@ -18,14 +20,36 @@ public class DomainController {
     @ResponseBody
     @PostMapping("/analyze")
     public String analyze(HttpServletRequest request) {
-        String temp = request.getParameter("url") + '\n';
+
+        String token = "/";
+        String temp = request.getParameter("url");
+        //
+        System.out.println(temp);
+        //
+        StringTokenizer strTk = new StringTokenizer(temp, token);
+        String video_id = "";
+
+        ArrayList<String> pstr = new ArrayList<>();
+        while(strTk.hasMoreTokens()){
+            pstr.add(strTk.nextToken());
+        }
 
         try {
-            temp = temp.substring(temp.length() - 11);
+            boolean find_Video_id = false;
+            for(int i=0; i<pstr.size(); i++){
+                //System.out.println(pstr.get(i));
+                if(pstr.get(i).equals("videos")) {
+                    find_Video_id = true;
+                    video_id = pstr.get(i+1);
+                    break;
+                }
+            }
         } catch(IndexOutOfBoundsException e) {
             return "Invalid Index";
         }
-        return temp;
+
+        System.out.println(video_id);
+        return video_id;
     }
 
 }
