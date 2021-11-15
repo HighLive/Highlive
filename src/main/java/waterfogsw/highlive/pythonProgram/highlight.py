@@ -1,4 +1,4 @@
-import json, datetime
+import json, datetime, sys
 import pandas as pd
 from collections import Counter
 from matplotlib import pyplot as plt
@@ -63,36 +63,44 @@ def print_result(highlight, leng):
     print("전체 하이라이트 길이: " + str(leng))
 
 
-def visualization(x):
+def visualization(x, path):
     x.plot(figsize=(50,15), grid=True, title="Catch Highlights")
     plt.xlabel("sec")
-    plt.savefig('graph.png')
+    plt.savefig(path)
 
 
-"""실행 코드"""
-# json 파일 열기
-json_path = "../Data/1167834289.json"
-with open(json_path, encoding='UTF-8') as jFile:
-    json_data = json.load(jFile)
+# MAIN
+def main(argv):
+    video_id = argv[1]
+    raw_path = "Data/raw_data/"+video_id+".json"
+    result_path = "Data/result_data/"+video_id+".json"
+    graph_path = "Data/graph_data/"+video_id+".png"
 
-# 채팅 데이터에서 각 시간별 채팅 빈도수만 뽑아서 반환
-chat_count = check_frequency(json_data)          
+    with open(raw_path, encoding='UTF-8') as jFile:
+        json_data = json.load(jFile)
 
-# 데이터를 전처리하여 사용할 채팅 빈도수만 골라 반환 
-## moving_average: 이동평균 데이터
-## 전처리: 이동평균 적용, 앞부분 슬라이싱, 정렬
-moving_avg, preprocessed_data = data_preprocessing(chat_count)
+    # 채팅 데이터에서 각 시간별 채팅 빈도수만 뽑아서 반환
+    chat_count = check_frequency(json_data)          
 
-# 실제 하이라이트 구간, 전체 길이 반환
-highlight, leng = find_highlight(preprocessed_data)
-print(highlight, leng)
+    # 데이터를 전처리하여 사용할 채팅 빈도수만 골라 반환 
+    ## moving_average: 이동평균 데이터
+    ## 전처리: 이동평균 적용, 앞부분 슬라이싱, 정렬
+    moving_avg, preprocessed_data = data_preprocessing(chat_count)
 
-# 결과 출력
-print_result(highlight, leng)
+    # 실제 하이라이트 구간, 전체 길이 반환
+    highlight, leng = find_highlight(preprocessed_data)
+    print(highlight, leng)
 
-# 그래프 저장
-visualization(moving_avg)
+    # 결과 출력
+    print_result(highlight, leng)
 
-# 이동평균 결과 JSON 반환
-result_json = moving_avg.to_dict()
-with open("./result.json", 'w') as outfile: json.dump(result_json, outfile)
+    # 그래프 저장
+    visualization(moving_avg, graph_path)
+
+    # 이동평균 결과 JSON 반환
+    result_json = moving_avg.to_dict()
+    with open(result_path, 'w') as outfile: 
+        json.dump(result_json, outfile)
+
+if __name__ == "__main__":
+    main(sys.argv)
