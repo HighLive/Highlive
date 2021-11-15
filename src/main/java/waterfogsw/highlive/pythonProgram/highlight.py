@@ -69,6 +69,17 @@ def visualization(x, path):
     plt.savefig(path)
 
 
+def return_json(moving_avg, result_path):
+    temp = moving_avg.to_dict()
+    result_json = [[k, v] for k, v in temp.items()]
+    with open(result_path, 'w') as outfile: 
+            json.dump(result_json, outfile)
+    
+    ##### old codeW
+    # result_json = moving_avg.to_dict()
+    # with open(result_path, 'w') as outfile: 
+    #     json.dump(result_json, outfile)
+
 # MAIN
 def main(argv):
     video_id = argv[1]
@@ -98,9 +109,7 @@ def main(argv):
     visualization(moving_avg, graph_path)
 
     # 이동평균 결과 JSON 반환
-    result_json = moving_avg.to_dict()
-    with open(result_path, 'w') as outfile: 
-        json.dump(result_json, outfile)
+    return_json(moving_avg, result_path)
 
 if __name__ == "__main__":
     main(sys.argv)
