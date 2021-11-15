@@ -86,6 +86,7 @@ def main(argv):
     
     print("END MAIN")
     
+    find_highilght
 
 if __name__ == "__main__":
     main(sys.argv)
