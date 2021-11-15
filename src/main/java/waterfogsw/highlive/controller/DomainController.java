@@ -14,11 +14,11 @@ import java.util.StringTokenizer;
 public class DomainController {
     @GetMapping("/")
     public String index() {
-        return "dashboard";
+        return "index";
     }
 
     @ResponseBody
-    @PostMapping("/analyze")
+    @PostMapping("/loading")
     public String analyze(HttpServletRequest request) {
 
         String token = "/";
