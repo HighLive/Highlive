@@ -23,9 +23,6 @@ public class DomainController {
 
         String token = "/";
         String temp = request.getParameter("url");
-        //
-        System.out.println(temp);
-        //
         StringTokenizer strTk = new StringTokenizer(temp, token);
         String video_id = "";
 
@@ -48,7 +45,6 @@ public class DomainController {
             return "Invalid Index";
         }
 
-        System.out.println(video_id);
         return video_id;
     }
 
