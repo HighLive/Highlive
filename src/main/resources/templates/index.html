@@ -19,6 +19,16 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#btn").click(function () {
+                $("#loadImg1").css("display", "inline-block");
+                $("#loadImg2").css("display", "inline-block");
+            });
+        });
+    </script>
+
 </head>
 
 <body id="page-top">
@@ -174,7 +184,7 @@
                         <input type="text" id="url" name="url" class="form-control bg-light border-0 small "
                                placeholder="Input Video Url " aria-label="Search " aria-describedby="basic-addon2 ">
                         <div class="input-group-append ">
-                            <button class="btn btn-primary " type="submit">
+                            <button id="btn" class="btn btn-primary " type="submit">
                                 <i class="fas fa-search fa-sm "></i>
                             </button>
                         </div>
@@ -400,6 +410,9 @@
                             <!-- Card Body -->
                             <div class="card-body ">
                                 <div class="chart-area ">
+                                    <div id="loadImg1" style="display: none;">
+                                        <img src="img/spinner.gif" style="text-align: center" width="128" height="128">
+                                    </div>
                                     <canvas id="myAreaChart "></canvas>
                                 </div>
                             </div>
@@ -428,7 +441,10 @@
                                 </div>
                             </div>
                             <!-- Card Body -->
-                            <div class="card-body ">
+                            <div class="card-body " style="text-align: center">
+                                <div id="loadImg2" style="display: none;">
+                                    <img src="img/spinner.gif" width="128" height="128">
+                                </div>
                                 <div class="chart-pie pt-4 pb-2 ">
                                     <canvas id="myPieChart "></canvas>
                                 </div>
