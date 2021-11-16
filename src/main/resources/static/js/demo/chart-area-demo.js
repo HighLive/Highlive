@@ -27,12 +27,22 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   return s.join(dec);
 }
 
+// getData
+chartLabels = [];
+chartData = [];
+$.getJSON("localhost:8080/python/Data/raw_data/1204174820.json", function(data) {
+	$.each(data, function(key, value){
+        chartLabels.push(value[0]);
+        chartData.push(parseFloat(value[1]));
+    });
+});
+
 // Area Chart Example
 var ctx = document.getElementById("myAreaChart");
 var myLineChart = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    labels: chartLabels,
     datasets: [{
       label: "Earnings",
       lineTension: 0.3,
@@ -46,7 +56,7 @@ var myLineChart = new Chart(ctx, {
       pointHoverBorderColor: "rgba(78, 115, 223, 1)",
       pointHitRadius: 10,
       pointBorderWidth: 2,
-      data: [0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000],
+      data: chartData,
     }],
   },
   options: {
