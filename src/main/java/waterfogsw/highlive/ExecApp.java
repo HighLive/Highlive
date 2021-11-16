@@ -2,37 +2,32 @@ package waterfogsw.highlive;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ExecApp {
 
-    private static final String crawlerPath = "./src/main/java/waterfogsw/highlive/pythonProgram/crawler.py";
+    private static final String crawlerPath = "./python/crawler.py";
+    private static final String highlightPath = "./python/highlight.py";
 
     public static void main(String[] args) throws IOException, InterruptedException {
         List<String> command = new ArrayList<>();
+
         command.add("python3");
-        command.add(crawlerPath);
-        command.add("1167834289");
+        command.add(highlightPath);
+        command.add("1204174820");
 
-        // Exec Crawler
-        ProcessBuilder processBuilder = new ProcessBuilder(command);
-        Process process = processBuilder.start();
+        try {
+            Process process = new ProcessBuilder(command).start();
+            BufferedReader stdOut = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
-        process.waitFor();
-
-        InputStream psout = process.getInputStream();
-        BufferedReader br = new BufferedReader(new InputStreamReader(psout));
-
-        String line;
-        StringBuilder output = new StringBuilder();
-        while ((line = br.readLine()) != null) {
-            output.append(line);
+            String str;
+            while((str = stdOut.readLine()) != null) {
+                System.out.println(str);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        br.close();
-
-        System.out.println(output.toString());
     }
 }

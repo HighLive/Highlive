@@ -1,12 +1,16 @@
 package waterfogsw.highlive.service;
 
+import org.springframework.stereotype.Service;
+@Service
 public class InputHandler {
-    private String url;
-    private String video_id;
 
-    private static final String pathOfCrawler = "../pythonProgram";
-    private static final String pathOfFindHighligh = "../pythonProgram";
+    public void runCrawler(String videoId) {
+        ExecCrawler execCrawler = new ExecCrawler(videoId);
+        execCrawler.run();
+    }
 
-    private static final ExecCrawler execCrawler = new ExecCrawler(pathOfCrawler);
-//    private static final ExecFindHighlight execFH = new ExecFindHighlight(pathOfFindHighlight);
+    public void runFindHighlight(String videoId) {
+        ExecFindHighlight execFindHighlight = new ExecFindHighlight(videoId);
+        execFindHighlight.run();
+    }
 }
