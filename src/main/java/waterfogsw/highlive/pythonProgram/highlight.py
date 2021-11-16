@@ -74,7 +74,11 @@ def return_json(moving_avg, result_path):
     result_json = [[k, v] for k, v in temp.items()]
     with open(result_path, 'w') as outfile: 
             json.dump(result_json, outfile)
-
+    
+    ##### old codeW
+    # result_json = moving_avg.to_dict()
+    # with open(result_path, 'w') as outfile: 
+    #     json.dump(result_json, outfile)
 
 # MAIN
 def main(argv):
