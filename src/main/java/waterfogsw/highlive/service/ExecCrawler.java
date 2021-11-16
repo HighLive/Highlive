@@ -7,10 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExecCrawler implements ExecPython {
-    private static final String crawlerPath = "./python/crawler.py";
+    private String videoId;
+    private final String crawlerPath = "./python/crawler.py";
+
+    public ExecCrawler(String videoId) {
+        this.videoId = videoId;
+    }
 
     @Override
-    public void execPython(String videoId) {
+    public void run() {
         List<String> command = new ArrayList<>();
 
         command.add("python3");

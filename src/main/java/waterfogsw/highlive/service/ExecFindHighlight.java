@@ -4,9 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExecFindHighlight implements ExecPython{
-    private static final String highlightPath = "./python/highlight.py";
+    private String videoId;
+    private final String highlightPath = "./python/highlight.py";
+
+    public ExecFindHighlight(String videoId) {
+        this.videoId = videoId;
+    }
+
     @Override
-    public void execPython(String videoId) {
+    public void run() {
         List<String> command = new ArrayList<>();
 
         command.add("python3");
