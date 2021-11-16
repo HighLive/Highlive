@@ -69,15 +69,21 @@ public class DomainController {
             pstr.add(st.nextToken());
         }
 
+        boolean validCheck = false;
         try {
             for(int i=0; i<pstr.size(); i++){
                 if(pstr.get(i).equals("videos")) {
                     video_id = pstr.get(i+1);
+                    validCheck = true;
                     break;
                 }
             }
         } catch(IndexOutOfBoundsException e) {
             return "invalid_videoId";
+        }
+
+        if(!validCheck){
+            return "404";
         }
 
         inputHandler.runCrawler(video_id);
