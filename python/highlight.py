@@ -80,9 +80,9 @@ def return_json(moving_avg, result_path):
 def main(argv):
     print("x")
     video_id = argv[1]
-    raw_path = "./python/Data/raw_data/"+video_id+".json"
-    result_path = "./python/Data/result_data/"+video_id+".json"
-    graph_path = "./python/Data/graph_data/"+video_id+".png"
+    raw_path = "Data/raw_data/"+video_id+".json"
+    result_path = "Data/result_data/"+video_id+".json"
+    graph_path = "Data/graph_data/"+video_id+".png"
     print("x")
     with open(raw_path, encoding='UTF-8') as jFile:
         json_data = json.load(jFile)
