@@ -36,8 +36,8 @@ out/
 ### VS Code ###
 .vscode/
 
-## video json data **
-/python/Data/graph_data/*
-/python/Data/raw_data/*
-/python/Data/result_data/*
+### video json data **
+#/python/Data/graph_data/*
+#/python/Data/raw_data/*
+#/python/Data/result_data/*
 
