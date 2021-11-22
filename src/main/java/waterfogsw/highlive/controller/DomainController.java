@@ -27,7 +27,7 @@ public class DomainController {
         return "index";
     }
 
-//    @ResponseBody
+    //    @ResponseBody
 //    @PostMapping("/loading")
 //    public String analyze(HttpServletRequest request) {
 //
@@ -58,8 +58,8 @@ public class DomainController {
 //        return video_id;
 //    }
 //
-    @PostMapping("/loading")
-    public String loading(HttpServletRequest request) {
+    @PostMapping("/result")
+    public String result(HttpServletRequest request) {
         String url = request.getParameter("url");
         StringTokenizer st = new StringTokenizer(url, "/");
         String video_id = "";
