@@ -59,7 +59,7 @@ def print_result(highlight, leng):
     for i, (left, right) in enumerate(highlight):
         print('['+str(i+1)+'] ' + str(datetime.timedelta(seconds=int(left))) + ' ~ ' + 
         str(datetime.timedelta(seconds=int(right))))
-        print("하이라이트 개수: " + str(len(highlight)))
+    print("하이라이트 개수: " + str(len(highlight)))
     print("전체 하이라이트 길이: " + str(leng))
 
 
