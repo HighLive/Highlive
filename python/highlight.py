@@ -78,24 +78,16 @@ def return_json(moving_avg, result_path):
         json.dump(result_json, outfile)
 
 
-def create_path(path):
-    try:
-        if not os.path.exists(path):
-            os.makedirs(path)
-    except OSError:
-        print("Error : Can not initialize path :" + path)
-
-
 # MAIN
 def main(argv):
-    print("x")
+
     video_id = argv[1]
 
     # java process builder를 통해 실행시킬 경우 다음의 경로를 따라야 함
     raw_path = "./python/Data/raw_data/"+video_id+".json"
     result_path = "./python/Data/result_data/"+video_id+".json"
     graph_path = "./python/Data/graph_data/"+video_id+".png"
-    print("x")
+
     with open(raw_path, encoding='UTF-8') as jFile:
         json_data = json.load(jFile)
 

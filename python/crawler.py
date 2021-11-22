@@ -1,6 +1,8 @@
 import sys
 import requests
 import json
+import os
+
 
 def getChatLog(video_id: str, client_id: str) -> list:
     next_cursor = ""
@@ -14,7 +16,7 @@ def getChatLog(video_id: str, client_id: str) -> list:
     # next_cursor는 다음 채팅데이터를 가리키고 있음
     while True:
         URL = "https://api.twitch.tv/v5/videos/" + \
-            video_id + "/comments?cursor=" + next_cursor
+              video_id + "/comments?cursor=" + next_cursor
 
         response = requests.get(URL, params=params)
         chat_json = json.loads(response.text)
@@ -31,6 +33,7 @@ def getChatLog(video_id: str, client_id: str) -> list:
 
 from collections import OrderedDict
 
+
 # list(Json) 객체를 받아 ./temp.json 으로 저장
 def LogToJson(video_id, log):
     index = 0
@@ -44,7 +47,6 @@ def LogToJson(video_id, log):
             msg['user_id'] = comment['commenter']['_id']
             msg['content'] = comment['message']['body']
 
-
             result["message" + str(index)] = msg
 
     # python파일 단독으로 실행 시킬때에는 다음의 경로를 따라야 함
@@ -54,13 +56,29 @@ def LogToJson(video_id, log):
     fileName = "./python/Data/raw_data/" + video_id + ".json"
 
     with open(fileName, 'w', encoding='utf8') as outfile:
-        json.dump(result, outfile, indent = 4, ensure_ascii=False)
+        json.dump(result, outfile, indent=4, ensure_ascii=False)
     return
 
 
-# MAIN
+def create_path(path):
+    try:
+        if not os.path.exists(path):
+            os.makedirs(path)
+    except OSError:
+        print("Error : Can not initialize path :" + path)
 
+
+# MAIN
 def main(argv):
+    # java process builder를 통해 실행시킬 경우 다음의 경로를 따라야 함
+    raw_dir = "./python/Data/raw_data/"
+    result_dir = "./python/Data/result_data/"
+    graph_path = "./python/Data/graph_data/"
+
+    create_path(raw_dir)
+    create_path(result_dir)
+    create_path(graph_path)
+
     twitch_client_id = "f0tc0p4p3mifcdxtwi530swm2dsw0f"
 
     print("START MAIN")
@@ -70,6 +88,7 @@ def main(argv):
     LogToJson(video_id, log)
 
     print("END MAIN")
+
 
 if __name__ == "__main__":
     main(sys.argv)
