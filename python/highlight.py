@@ -103,7 +103,7 @@ def main(argv):
     print_result(highlight, leng)
 
     # 그래프 저장
-    visualization(moving_avg, graph_path)
+    # visualization(moving_avg, graph_path)
 
     # 이동평균 결과 JSON 반환
     return_json(moving_avg, result_path)
