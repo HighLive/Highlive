@@ -22,11 +22,16 @@ def check_frequency(json_data):
 def data_preprocessing(chat_count, START=0, WIN=7):
     # 이동평균 적용(WIN)
     moving_avg = chat_count.rolling(WIN).mean()
+    moving_avg[range(WIN-1)] = 0
 
-    # 앞부분(START) 자르고 채팅 빈도순으로 정렬하기
-    processed_data = moving_avg.drop(list(range(1, START))).sort_values(ascending=[False])
+    # 앞부분 자르기(START)
+    moving_avg = moving_avg.drop(range(1,START))
 
-    return moving_avg, processed_data  # 그래프 x축, 전처리된 데이터 반환
+    # 채팅 빈도순으로 정렬
+    processed_data = moving_avg.sort_values(ascending=[False])
+
+    # (그래프 x축), (전처리된 데이터) 반환
+    return moving_avg, processed_data
 
 
 # TERM: 단편 하이라이트의 최소 길이 (default: 10sec)
@@ -59,10 +64,10 @@ def find_highlight(data, TERM=10, LENGTH=60 * 10):
 
 def print_result(highlight, leng):
     for i, (left, right) in enumerate(highlight):
-        print('[' + str(i + 1) + '] ' + str(datetime.timedelta(seconds=int(left))) + ' ~ ' +
-              str(datetime.timedelta(seconds=int(right))))
-    print("하이라이트 개수: " + str(len(highlight)))
-    print("전체 하이라이트 길이: " + str(leng))
+        print('['+str(i+1)+'] ' + str(datetime.timedelta(seconds=int(left))) + ' ~ ' +
+        str(datetime.timedelta(seconds=int(right))))
+    print("Number of highlights: %d" % len(highlight))
+    print("Full length of highlight: %dmin %dsec" % (leng//60, leng%60))
 
 
 def visualization(x, path):
@@ -100,8 +105,8 @@ def main(argv):
     moving_avg, preprocessed_data = data_preprocessing(chat_count)
 
     # 실제 하이라이트 구간, 전체 길이 반환
-    highlight, leng = find_highlight(preprocessed_data)
-    print(highlight, leng)
+    ## 길이 = 전체영상길이의 20% (default: 10min)
+    highlight, leng = find_highlight(preprocessed_data, LENGTH=len(chat_count)//5)
 
     # 결과 출력
     print_result(highlight, leng)
