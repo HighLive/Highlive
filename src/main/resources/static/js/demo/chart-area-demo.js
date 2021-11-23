@@ -30,8 +30,8 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 // getData
 chartLabels = [];
 chartData = [];
-$.getJSON("http://"+ window.location.host + "/api/json/1210752959", function(data) {
-  prompt()
+
+$.getJSON("http://"+ window.location.host + "/api/json/" + videoId, function(data) {
 	$.each(data, function(key, value){
         chartLabels.push(value[0]);
         chartData.push(parseFloat(value[1]));
