@@ -38,7 +38,7 @@
 
 <!-- Page Wrapper -->
 <div id="wrapper">
-
+    <span hidden id="videoId" th:text="${videoId}"></span>
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -584,6 +584,12 @@
         </div>
     </div>
 </div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var videoId = /*[[${videoId}]]*/ 'default';
+    /*]]>*/
+</script>
 
 <!-- Bootstrap core JavaScript-->
 <script src="vendor/jquery/jquery.min.js"></script>

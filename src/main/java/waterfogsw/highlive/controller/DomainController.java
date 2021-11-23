@@ -2,6 +2,7 @@ package waterfogsw.highlive.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -59,7 +60,7 @@ public class DomainController {
 //    }
 //
     @PostMapping("/result")
-    public String result(HttpServletRequest request) {
+    public String result(HttpServletRequest request, Model model) {
         String url = request.getParameter("url");
         StringTokenizer st = new StringTokenizer(url, "/");
         String video_id = "";
@@ -88,6 +89,8 @@ public class DomainController {
 
         inputHandler.runCrawler(video_id);
         inputHandler.runFindHighlight(video_id);
+
+        model.addAttribute("videoId", video_id);
 
         return "result";
     }
