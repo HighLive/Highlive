@@ -87,7 +87,13 @@ public class DomainController {
             return "404";
         }
 
+        // 크롤링
         inputHandler.runCrawler(video_id);
+
+        // 감정분석
+        inputHandler.runClassifyEmotion(video_id);
+
+        // 트래픽 추출
         inputHandler.runFindHighlight(video_id);
 
         model.addAttribute("videoId", video_id);

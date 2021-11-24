@@ -13,4 +13,9 @@ public class InputHandler {
         ExecFindHighlight execFindHighlight = new ExecFindHighlight(videoId);
         execFindHighlight.run();
     }
+
+    public void runClassifyEmotion(String videiId){
+        ExecClassifyEmotion execClassifyEmotion = new ExecClassifyEmotion(videiId);
+        execClassifyEmotion.run();
+    }
 }
