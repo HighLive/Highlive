@@ -49,14 +49,14 @@ var myLineChart = new Chart(ctx, {
       lineTension: 0.3,
       backgroundColor: "rgba(78, 115, 223, 0.05)",
       borderColor: "rgba(78, 115, 223, 1)",
-      pointRadius: 3,
+      pointRadius: 1,
       pointBackgroundColor: "rgba(78, 115, 223, 1)",
       pointBorderColor: "rgba(78, 115, 223, 1)",
-      pointHoverRadius: 3,
+      pointHoverRadius: 1,
       pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
       pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-      pointHitRadius: 10,
-      pointBorderWidth: 2,
+      pointHitRadius: 5,
+      pointBorderWidth: 1,
       data: chartData
     }],
   },
@@ -80,17 +80,17 @@ var myLineChart = new Chart(ctx, {
           drawBorder: false
         },
         ticks: {
-          maxTicksLimit: 7
+          maxTicksLimit: 7,
+          // Include a second sign
+          callback: function(value, index, values) {
+            return number_format(value) + 's';
+          }
         }
       }],
       yAxes: [{
         ticks: {
           maxTicksLimit: 5,
           padding: 10,
-          // Include a dollar sign in the ticks
-          callback: function(value, index, values) {
-            return '$' + number_format(value);
-          }
         },
         gridLines: {
           color: "rgb(234, 236, 244)",
