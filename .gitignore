@@ -37,9 +37,12 @@ out/
 .vscode/
 
 ### video json data **
-#/python/Data/graph_data/*
-#/python/Data/raw_data/*
-#/python/Data/result_data/*
+/python/Data/graph_data/*.json
+/python/Data/raw_data/*.json
+/python/Data/traffic_data/*.json
+/python/Data/emotion_data/*.json
+/python/Data/highlight_data/*.json
+/python/Data/valid_data/*.json
 
 ### pycache
 /python/__pycache__/*
