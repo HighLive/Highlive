@@ -90,9 +90,9 @@ def main(argv):
     video_id = argv[1]
 
     raw_path = Path.raw.value+video_id+".json"
-    traffic_path = Path.raw.value+video_id+".json"
-    highlight_path = Path.raw.value+video_id+".json"
-    graph_path = Path.raw.value+video_id+".png"
+    traffic_path = Path.traffic.value+video_id+".json"
+    highlight_path = Path.highlight.value+video_id+".json"
+    graph_path = Path.graph.value+video_id+".png"
 
     with open(raw_path, encoding='UTF-8') as jFile:
         json_data = json.load(jFile)
