@@ -56,6 +56,9 @@ public class DomainController {
             return "404";
         }
 
+        // 초기화
+        inputHandler.runInit(video_id);
+
         // 크롤링
         inputHandler.runCrawler(video_id);
 

@@ -4,6 +4,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class InputHandler {
 
+    public void runInit(String videoId) {
+        ExecInit execInit = new ExecInit(videoId);
+        execInit.run();
+    }
+
     public void runCrawler(String videoId) {
         ExecCrawler execCrawler = new ExecCrawler(videoId);
         execCrawler.run();

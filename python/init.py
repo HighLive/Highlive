@@ -2,7 +2,7 @@ import os, sys
 from path import Path
 
 # 폴더 생성
-def main():
+def main(argv):
     for path in Path:
         p = path.value
         try:
