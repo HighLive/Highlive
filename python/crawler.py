@@ -1,6 +1,7 @@
-import sys
 import requests
-import json
+import json, sys
+
+from functions import return_json
 from path import Path
 
 def getChatLog(video_id: str, client_id: str) -> list:
@@ -58,9 +59,7 @@ def main(argv):
 
     log = getChatLog(video_id, twitch_client_id)
     result = LogToJson(log)
-    with open(raw_path, 'w', encoding='utf8') as outfile:
-        json.dump(result, outfile, indent=4, ensure_ascii=False)
-
+    return_json(result, raw_path)
 
     print("END MAIN")
 
