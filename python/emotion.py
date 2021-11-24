@@ -1,8 +1,7 @@
-import json, datetime, sys, os
+import json, sys
 
-import pandas as pd
-from collections import Counter
-from matplotlib import pyplot as plt
+from path import Path
+from functions import return_json
 
 IMOTION_NUM = 5
 
@@ -75,22 +74,12 @@ def classify_emotion(json_data):
 
     return  emotion_score, valid_score
 
-def return_json(result_data, result_path):
-    temp = result_data
-    result_json = [[k, v] for k, v in temp.items()]
-    with open(result_path, 'w') as outfile:
-        json.dump(result_json, outfile)
-
-
 # MAIN
 def main(argv):
-
     video_id = argv[1]
-
-    # java process builder를 통해 실행시킬 경우 다음의 경로를 따라야 함
-    raw_path = "./python/Data/raw_data/" + video_id + ".json"
-    emotion_path = "./python/Data/emotion_data/" + video_id + ".json"
-    valid_path = "./python/Data/valid_data/" + video_id + ".json"
+    raw_path = Path.raw.value + video_id + ".json"
+    emotion_path = Path.emotion.value + video_id + ".json"
+    valid_path = Path.valid.value + video_id + ".json"
 
     with open(raw_path, encoding='UTF-8') as jFile:
         json_data = json.load(jFile)
@@ -103,9 +92,12 @@ def main(argv):
     print(valid_class)
 
     # 감정 점수 결과 JSON 반환
-    return_json(emotion_class, emotion_path)
+    list_emotion = [[k, v] for k, v in emotion_class.items()]
+    return_json(list_emotion, emotion_path)
+
     # 유효 점수 결과 JSON 변환
-    return_json(valid_class, valid_path)
+    list_valid = [[k, v] for k, v in valid_class.items()]
+    return_json(list_valid, valid_path)
 
 
 if __name__ == "__main__":
