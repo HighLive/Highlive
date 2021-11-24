@@ -1,8 +1,10 @@
-import json, datetime, sys, os
+import json, datetime, sys
 
 import pandas as pd
 from collections import Counter
 from matplotlib import pyplot as plt
+
+from path import Path
 
 
 def check_frequency(json_data):
@@ -82,17 +84,15 @@ def return_json(return_data, path):
     with open(path, 'w') as outfile:
         json.dump(traffic_json, outfile)
 
-
 # MAIN
 def main(argv):
 
     video_id = argv[1]
 
-    # java process builder를 통해 실행시킬 경우 다음의 경로를 따라야 함
-    raw_path = "./python/Data/raw_data/"+video_id+".json"
-    traffic_path = "./python/Data/traffic_data/"+video_id+".json"
-    highlight_path = "./python/Data/highlight_data/"+video_id+".json"
-    graph_path = "./python/Data/graph_data/"+video_id+".png"
+    raw_path = Path.raw.value+video_id+".json"
+    traffic_path = Path.raw.value+video_id+".json"
+    highlight_path = Path.raw.value+video_id+".json"
+    graph_path = Path.raw.value+video_id+".png"
 
     with open(raw_path, encoding='UTF-8') as jFile:
         json_data = json.load(jFile)
