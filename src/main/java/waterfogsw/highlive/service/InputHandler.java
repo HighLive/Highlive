@@ -23,4 +23,8 @@ public class InputHandler {
         ExecClassifyEmotion execClassifyEmotion = new ExecClassifyEmotion(videiId);
         execClassifyEmotion.run();
     }
+
+    public boolean checkCache(String videoId){
+        return CheckCache.checkByVideoId(videoId);
+    }
 }
