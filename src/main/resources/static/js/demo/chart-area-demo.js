@@ -31,7 +31,7 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 chartLabels = [];
 chartData = [];
 
-$.getJSON("http://"+ window.location.host + "/api/json/" + videoId, function(data) {
+$.getJSON("http://"+ window.location.host + "/api/traffic/" + videoId, function(data) {
 	$.each(data, function(key, value){
         chartLabels.push(value[0]);
         chartData.push(parseFloat(value[1]));
