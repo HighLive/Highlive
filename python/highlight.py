@@ -1,8 +1,10 @@
-import json, datetime, sys, os
+import json, datetime, sys
 
 import pandas as pd
 from collections import Counter
 from matplotlib import pyplot as plt
+
+from path import Path
 
 
 def check_frequency(json_data):
@@ -62,7 +64,7 @@ def find_highlight(data, TERM=10, LENGTH=60 * 10):
     return H, hileng  # 하이라이트 구간, 전체길이 반환
 
 
-def print_result(highlight, leng):
+def print_traffic(highlight, leng):
     for i, (left, right) in enumerate(highlight):
         print('['+str(i+1)+'] ' + str(datetime.timedelta(seconds=int(left))) + ' ~ ' +
         str(datetime.timedelta(seconds=int(right))))
@@ -76,22 +78,21 @@ def visualization(x, path):
     plt.savefig(path)
 
 
-def return_json(moving_avg, result_path):
-    temp = moving_avg.to_dict()
-    result_json = [[k, v] for k, v in temp.items()]
-    with open(result_path, 'w') as outfile:
-        json.dump(result_json, outfile)
-
+def return_json(return_data, path):
+    temp = return_data.to_dict()
+    traffic_json = [[k, v] for k, v in temp.items()]
+    with open(path, 'w') as outfile:
+        json.dump(traffic_json, outfile)
 
 # MAIN
 def main(argv):
 
     video_id = argv[1]
 
-    # java process builder를 통해 실행시킬 경우 다음의 경로를 따라야 함
-    raw_path = "./python/Data/raw_data/"+video_id+".json"
-    result_path = "./python/Data/result_data/"+video_id+".json"
-    graph_path = "./python/Data/graph_data/"+video_id+".png"
+    raw_path = Path.raw.value+video_id+".json"
+    traffic_path = Path.raw.value+video_id+".json"
+    highlight_path = Path.raw.value+video_id+".json"
+    graph_path = Path.raw.value+video_id+".png"
 
     with open(raw_path, encoding='UTF-8') as jFile:
         json_data = json.load(jFile)
@@ -100,8 +101,8 @@ def main(argv):
     chat_count = check_frequency(json_data)
 
     # 데이터를 전처리하여 사용할 채팅 빈도수만 골라 반환 
-    # - moving_average: 이동평균 데이터
-    # - 전처리: 이동평균 적용, 앞부분 슬라이싱, 정렬
+    ## - moving_average: 이동평균 데이터
+    ## - 전처리: 이동평균 적용, 앞부분 슬라이싱, 정렬
     moving_avg, preprocessed_data = data_preprocessing(chat_count)
 
     # 실제 하이라이트 구간, 전체 길이 반환
@@ -109,14 +110,16 @@ def main(argv):
     highlight, leng = find_highlight(preprocessed_data, LENGTH=len(chat_count)//5)
 
     # 결과 출력
-    print_result(highlight, leng)
+    print_traffic(highlight, leng)
+
+    # 이동평균 결과 JSON 반환
+    return_json(moving_avg, traffic_path)
+
+    # 하이라이트 결과 JSON 반환
+    return_json(highlight, highlight_path)
 
     # 그래프 저장
     # visualization(moving_avg, graph_path)
-
-    # 이동평균 결과 JSON 반환
-    return_json(moving_avg, result_path)
-
 
 if __name__ == "__main__":
     main(sys.argv)
