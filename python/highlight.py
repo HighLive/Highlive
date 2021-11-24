@@ -1,10 +1,8 @@
-import json, datetime, sys, os
-
+import datetime
 import pandas as pd
 from collections import Counter
-from matplotlib import pyplot as plt
 
-
+# 시간대별 채팅 수 반환
 def check_frequency(json_data):
     timeData = []
     for chat in json_data:
@@ -14,35 +12,34 @@ def check_frequency(json_data):
     temp = pd.Series(freq)
     chat_count = temp.reindex(list(range(1, temp.last_valid_index() + 1)), fill_value=0)
 
-    return chat_count  # 시간대별 채팅 수 반환
+    return chat_count
 
 
-# START: 하이라이트 측정 (default: 0)
-# WIN: 이동평균 인자 (default: 7)
-def data_preprocessing(chat_count, START=0, WIN=7):
-    # 이동평균 적용(WIN)
-    moving_avg = chat_count.rolling(WIN).mean()
-    moving_avg[range(WIN-1)] = 0
-
+# 이동평균 적용결과 반환
+def data_preprocessing(input_data, START=0, WIN=7):
     # 앞부분 자르기(START)
-    moving_avg = moving_avg.drop(range(1,START))
+    sliced = input_data.drop(range(1,START))
+    
+    # 이동평균 적용(WIN)
+    moving_avg_data = sliced.rolling(WIN).mean()
+    moving_avg_data[range(WIN-1)] = 0    # NaN 제거
+    return moving_avg_data
+
+
+# 하이라이트 측정결과 반환
+def find_highlight(input_data, TERM=10, LENGTH=60 * 10):
+    ## TERM: 하이라이트 단편 최소 길이
+    ## LENGTH: 하이라이트 총 길이
 
     # 채팅 빈도순으로 정렬
-    processed_data = moving_avg.sort_values(ascending=[False])
+    sorted_data = input_data.sort_values(ascending=[False])
 
-    # (그래프 x축), (전처리된 데이터) 반환
-    return moving_avg, processed_data
-
-
-# TERM: 단편 하이라이트의 최소 길이 (default: 10sec)
-# LENGTH: 전체 하이라이트 길이 (default: 10min)
-def find_highlight(data, TERM=10, LENGTH=60 * 10):
     H = []
     hileng = 0
     num = 0
-    while (hileng < LENGTH and num < len(data)):
+    while (hileng < LENGTH and num < len(sorted_data)):
         hileng = 0
-        peaktime = data.index[num]
+        peaktime = sorted_data.index[num]
         H.append((max(peaktime - TERM, 0), peaktime))
         H.sort()
         try:
@@ -62,7 +59,8 @@ def find_highlight(data, TERM=10, LENGTH=60 * 10):
     return H, hileng  # 하이라이트 구간, 전체길이 반환
 
 
-def print_traffic(highlight, leng):
+
+def print_result(highlight, leng):
     for i, (left, right) in enumerate(highlight):
         print('['+str(i+1)+'] ' + str(datetime.timedelta(seconds=int(left))) + ' ~ ' +
         str(datetime.timedelta(seconds=int(right))))
@@ -70,56 +68,10 @@ def print_traffic(highlight, leng):
     print("Full length of highlight: %dmin %dsec" % (leng//60, leng%60))
 
 
-def visualization(x, path):
-    x.plot(figsize=(50, 15), grid=True, title="Catch Highlights")
-    plt.xlabel("sec")
-    plt.savefig(path)
-
-
-def return_json(return_data, path):
-    temp = return_data.to_dict()
-    traffic_json = [[k, v] for k, v in temp.items()]
-    with open(path, 'w') as outfile:
-        json.dump(traffic_json, outfile)
-
-
-# MAIN
 def main(argv):
-
-    video_id = argv[1]
-
-    # java process builder를 통해 실행시킬 경우 다음의 경로를 따라야 함
-    raw_path = "./python/Data/raw_data/"+video_id+".json"
-    traffic_path = "./python/Data/traffic_data/"+video_id+".json"
-    highlight_path = "./python/Data/highlight_data/"+video_id+".json"
-    graph_path = "./python/Data/graph_data/"+video_id+".png"
-
-    with open(raw_path, encoding='UTF-8') as jFile:
-        json_data = json.load(jFile)
-
-    # 채팅 데이터에서 각 시간별 채팅 빈도수만 뽑아서 반환
-    chat_count = check_frequency(json_data)
-
-    # 데이터를 전처리하여 사용할 채팅 빈도수만 골라 반환 
-    ## - moving_average: 이동평균 데이터
-    ## - 전처리: 이동평균 적용, 앞부분 슬라이싱, 정렬
-    moving_avg, preprocessed_data = data_preprocessing(chat_count)
-
-    # 실제 하이라이트 구간, 전체 길이 반환
-    ## 길이 = 전체영상길이의 20% (default: 10min)
-    highlight, leng = find_highlight(preprocessed_data, LENGTH=len(chat_count)//5)
-
-    # 결과 출력
-    print_traffic(highlight, leng)
-
-    # 이동평균 결과 JSON 반환
-    return_json(moving_avg, traffic_path)
-
-    # 하이라이트 결과 JSON 반환
-    return_json(highlight, highlight_path)
-
-    # 그래프 저장
-    # visualization(moving_avg, graph_path)
-
-if __name__ == "__main__":
-    main(sys.argv)
+    chat_count =  check_frequency(shared_log)
+    moving_avg_data = data_preprocessing(chat_count)
+    highlight_data, leng = find_highlight(moving_avg_data)
+    highlight_data.print_result(highlight, leng)
+    return_json(moving_avg_data, path['traffic_data'])
+    return_json(highlight_data, path['highlight_data'])
