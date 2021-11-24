@@ -27,34 +27,52 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   return s.join(dec);
 }
 
+emotionChartLabels = []
+emotionChartData = []
+
+$.getJSON("http://"+ window.location.host + "/api/emotion/" + videoId, function(data) {
+  $.each(data, function(key, value){
+    emotionChartLabels.push(value[0]);
+    emotionChartData.push(parseFloat(value[1]));
+  });
+});
+
 // Bar Chart Example
 var ctx = document.getElementById("myBarChart");
 var myBarChart = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: ["January", "February", "March", "April", "May", "June"],
+    labels: emotionChartLabels,
     datasets: [{
-      label: "Revenue",
-      backgroundColor: "#4e73df",
-      hoverBackgroundColor: "#2e59d9",
-      borderColor: "#4e73df",
-      data: [4215, 5312, 6251, 7841, 9821, 14984],
-    }],
+      data: emotionChartData,
+      backgroundColor: [
+        'rgba(216, 27, 96, 0.6)',
+        'rgba(3, 169, 244, 0.6)',
+        'rgba(255, 152, 0, 0.6)',
+        'rgba(29, 233, 182, 0.6)',
+        'rgba(156, 39, 176, 0.6)',
+        'rgba(84, 110, 122, 0.6)'
+      ],
+      borderColor: [
+        'rgba(216, 27, 96, 1)',
+        'rgba(3, 169, 244, 1)',
+        'rgba(255, 152, 0, 1)',
+        'rgba(29, 233, 182, 1)',
+        'rgba(156, 39, 176, 1)',
+        'rgba(84, 110, 122, 1)'
+      ],
+      borderWidth: 1
+    }]
   },
   options: {
     maintainAspectRatio: false,
-    layout: {
-      padding: {
-        left: 10,
-        right: 25,
-        top: 25,
-        bottom: 0
-      }
+    legend: {
+      display: false
     },
     scales: {
       xAxes: [{
         time: {
-          unit: 'month'
+          unit: 'emotion'
         },
         gridLines: {
           display: false,
@@ -63,17 +81,16 @@ var myBarChart = new Chart(ctx, {
         ticks: {
           maxTicksLimit: 6
         },
-        maxBarThickness: 25,
       }],
       yAxes: [{
         ticks: {
           min: 0,
-          max: 15000,
+          max: 100,
           maxTicksLimit: 5,
           padding: 10,
           // Include a dollar sign in the ticks
           callback: function(value, index, values) {
-            return '$' + number_format(value);
+            return '' + number_format(value);
           }
         },
         gridLines: {
@@ -84,28 +101,6 @@ var myBarChart = new Chart(ctx, {
           zeroLineBorderDash: [2]
         }
       }],
-    },
-    legend: {
-      display: false
-    },
-    tooltips: {
-      titleMarginBottom: 10,
-      titleFontColor: '#6e707e',
-      titleFontSize: 14,
-      backgroundColor: "rgb(255,255,255)",
-      bodyFontColor: "#858796",
-      borderColor: '#dddfeb',
-      borderWidth: 1,
-      xPadding: 15,
-      yPadding: 15,
-      displayColors: false,
-      caretPadding: 10,
-      callbacks: {
-        label: function(tooltipItem, chart) {
-          var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-          return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
-        }
-      }
     },
   }
 });
