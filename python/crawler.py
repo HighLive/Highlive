@@ -1,8 +1,7 @@
 import sys
 import requests
 import json
-import os
-
+from path import Path
 
 def getChatLog(video_id: str, client_id: str) -> list:
     next_cursor = ""
@@ -31,16 +30,13 @@ def getChatLog(video_id: str, client_id: str) -> list:
     return chat_log
 
 
-from collections import OrderedDict
-
-
 # list(Json) 객체를 받아 ./temp.json 으로 저장
-def LogToJson(video_id, log):
+def LogToJson(log):
     index = 0
-    result = OrderedDict()
+    result = {}
     for l in log:
         for comment in l:
-            msg = OrderedDict()
+            msg = {}
             index += 1
 
             msg['time'] = comment["content_offset_seconds"]
@@ -48,47 +44,25 @@ def LogToJson(video_id, log):
             msg['content'] = comment['message']['body']
 
             result["message" + str(index)] = msg
-
-    # python파일 단독으로 실행 시킬때에는 다음의 경로를 따라야 함
-    # fileName = "./Data/raw_data/" + video_id + ".json"
-
-    # java process builder를 통해 실행시킬 경우 다음의 경로를 따라야 함
-    fileName = "./python/Data/raw_data/" + video_id + ".json"
-
-    with open(fileName, 'w', encoding='utf8') as outfile:
-        json.dump(result, outfile, indent=4, ensure_ascii=False)
-    return
-
-
-def create_path(path):
-    try:
-        if not os.path.exists(path):
-            os.makedirs(path)
-    except OSError:
-        print("Error : Can not initialize path :" + path)
+    return result
 
 
 # MAIN
 def main(argv):
-    # java process builder를 통해 실행시킬 경우 다음의 경로를 따라야 함
-    raw_dir = "./python/Data/raw_data/"
-    result_dir = "./python/Data/result_data/"
-    graph_path = "./python/Data/graph_data/"
-
-    create_path(raw_dir)
-    create_path(result_dir)
-    create_path(graph_path)
-
+    video_id = argv[1]
     twitch_client_id = "f0tc0p4p3mifcdxtwi530swm2dsw0f"
+
+    raw_path = Path.raw.value + video_id + '.json'
 
     print("START MAIN")
 
-    video_id = argv[1]
     log = getChatLog(video_id, twitch_client_id)
-    LogToJson(video_id, log)
+    result = LogToJson(log)
+    with open(raw_path, 'w', encoding='utf8') as outfile:
+        json.dump(result, outfile, indent=4, ensure_ascii=False)
+
 
     print("END MAIN")
-
 
 if __name__ == "__main__":
     main(sys.argv)
