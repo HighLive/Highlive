@@ -28,37 +28,6 @@ public class DomainController {
         return "index";
     }
 
-    //    @ResponseBody
-//    @PostMapping("/loading")
-//    public String analyze(HttpServletRequest request) {
-//
-//        String token = "/";
-//        String temp = request.getParameter("url");
-//        StringTokenizer strTk = new StringTokenizer(temp, token);
-//        String video_id = "";
-//
-//        ArrayList<String> pstr = new ArrayList<>();
-//        while(strTk.hasMoreTokens()){
-//            pstr.add(strTk.nextToken());
-//        }
-//
-//        try {
-//            boolean find_Video_id = false;
-//            for(int i=0; i<pstr.size(); i++){
-//                //System.out.println(pstr.get(i));
-//                if(pstr.get(i).equals("videos")) {
-//                    find_Video_id = true;
-//                    video_id = pstr.get(i+1);
-//                    break;
-//                }
-//            }
-//        } catch(IndexOutOfBoundsException e) {
-//            return "Invalid Index";
-//        }
-//
-//        return video_id;
-//    }
-//
     @PostMapping("/result")
     public String result(HttpServletRequest request, Model model) {
         String url = request.getParameter("url");
