@@ -41,3 +41,5 @@ out/
 #/python/Data/raw_data/*
 #/python/Data/result_data/*
 
+### pycache
+/python/__pycache__/*
