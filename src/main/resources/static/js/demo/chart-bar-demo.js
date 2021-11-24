@@ -37,70 +37,73 @@ $.getJSON("http://"+ window.location.host + "/api/emotion/" + videoId, function(
   });
 });
 
-// Bar Chart Example
-var ctx = document.getElementById("myBarChart");
-var myBarChart = new Chart(ctx, {
-  type: 'bar',
-  data: {
-    labels: emotionChartLabels,
-    datasets: [{
-      data: emotionChartData,
-      backgroundColor: [
-        'rgba(216, 27, 96, 0.6)',
-        'rgba(3, 169, 244, 0.6)',
-        'rgba(255, 152, 0, 0.6)',
-        'rgba(29, 233, 182, 0.6)',
-        'rgba(156, 39, 176, 0.6)',
-        'rgba(84, 110, 122, 0.6)'
-      ],
-      borderColor: [
-        'rgba(216, 27, 96, 1)',
-        'rgba(3, 169, 244, 1)',
-        'rgba(255, 152, 0, 1)',
-        'rgba(29, 233, 182, 1)',
-        'rgba(156, 39, 176, 1)',
-        'rgba(84, 110, 122, 1)'
-      ],
-      borderWidth: 1
-    }]
-  },
-  options: {
-    maintainAspectRatio: false,
-    legend: {
-      display: false
+// 페이지가 로드 된 이후 canvas 그리기
+window.addEventListener('load', ()=> {
+  // Bar Chart Example
+  var ctx = document.getElementById("myBarChart");
+  var myBarChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: emotionChartLabels,
+      datasets: [{
+        data: emotionChartData,
+        backgroundColor: [
+          'rgba(216, 27, 96, 0.6)',
+          'rgba(3, 169, 244, 0.6)',
+          'rgba(255, 152, 0, 0.6)',
+          'rgba(29, 233, 182, 0.6)',
+          'rgba(156, 39, 176, 0.6)',
+          'rgba(84, 110, 122, 0.6)'
+        ],
+        borderColor: [
+          'rgba(216, 27, 96, 1)',
+          'rgba(3, 169, 244, 1)',
+          'rgba(255, 152, 0, 1)',
+          'rgba(29, 233, 182, 1)',
+          'rgba(156, 39, 176, 1)',
+          'rgba(84, 110, 122, 1)'
+        ],
+        borderWidth: 1
+      }]
     },
-    scales: {
-      xAxes: [{
-        time: {
-          unit: 'emotion'
-        },
-        gridLines: {
-          display: false,
-          drawBorder: false
-        },
-        ticks: {
-          maxTicksLimit: 6
-        },
-      }],
-      yAxes: [{
-        ticks: {
-          min: 0,
-          max: 100,
-          maxTicksLimit: 5,
-          padding: 10,
-          // Include a dollar sign in the ticks
-          callback: function(value, index, values) {
-            return '' + number_format(value);
+    options: {
+      maintainAspectRatio: false,
+      legend: {
+        display: false
+      },
+      scales: {
+        xAxes: [{
+          time: {
+            unit: 'emotion'
+          },
+          gridLines: {
+            display: false,
+            drawBorder: false
+          },
+          ticks: {
+            maxTicksLimit: 6
+          },
+        }],
+        yAxes: [{
+          ticks: {
+            min: 0,
+            max: 100,
+            maxTicksLimit: 5,
+            padding: 10,
+            // Include a dollar sign in the ticks
+            callback: function(value, index, values) {
+              return '' + number_format(value);
+            }
+          },
+          gridLines: {
+            color: "rgb(234, 236, 244)",
+            zeroLineColor: "rgb(234, 236, 244)",
+            drawBorder: false,
+            borderDash: [2],
+            zeroLineBorderDash: [2]
           }
-        },
-        gridLines: {
-          color: "rgb(234, 236, 244)",
-          zeroLineColor: "rgb(234, 236, 244)",
-          drawBorder: false,
-          borderDash: [2],
-          zeroLineBorderDash: [2]
-        }
-      }],
-    },
-  }
-});
+        }],
+      },
+    }
+  });
+})
