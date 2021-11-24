@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import waterfogsw.highlive.service.CheckCache;
 import waterfogsw.highlive.service.InputHandler;
 
 
@@ -56,17 +57,21 @@ public class DomainController {
             return "404";
         }
 
-        // 초기화
-        inputHandler.runInit(video_id);
+        if(!inputHandler.checkCache(video_id)) {
+            // 캐시 미스
+            System.out.println("cache miss! ");
 
-        // 크롤링
-        inputHandler.runCrawler(video_id);
-
-        // 감정분석
-        inputHandler.runClassifyEmotion(video_id);
-
-        // 트래픽 추출
-        inputHandler.runFindHighlight(video_id);
+            // 초기화
+            inputHandler.runInit(video_id);
+            // 크롤링
+            inputHandler.runCrawler(video_id);
+            // 감정분석
+            inputHandler.runClassifyEmotion(video_id);
+            // 트래픽 추출
+            inputHandler.runFindHighlight(video_id);
+        }
+        else
+            System.out.println("cache hit!");
 
         model.addAttribute("videoId", video_id);
 
