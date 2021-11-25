@@ -103,7 +103,7 @@ window.addEventListener('load', ()=> {
             maxTicksLimit: 7,
             // Include a second sign
             callback: function (value, index, values) {
-              return time_format(value) + 's';
+              return time_format(value);
             }
           }
         }],
@@ -139,6 +139,9 @@ window.addEventListener('load', ()=> {
         mode: 'index',
         caretPadding: 10,
         callbacks: {
+          title: function(tooltipItems, chart) {
+            return 'Time: ' +  time_format(tooltipItems[0].xLabel);
+          },
           label: function (tooltipItem, chart) {
             var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
             return datasetLabel + ': ' + number_format(tooltipItem.yLabel);
