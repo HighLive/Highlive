@@ -33,3 +33,10 @@ ex) https://www.twitch.tv/videos/1210752959
 3. CNN알고리즘을 통해 영상을 통한 하이라이트 분류 모델 구현
 4. 트위치 뿐만 아니라 Youtube, AfreecaTV등 다양한 영상 플랫폼을 활용할 수 있도록 개선
 5. 편집자 개입없이 분석된 데이터를 토대로 추출된 하이라이트 구간을 모아 사용자에게 제공하는 자동 편집 기능 추가
+
+## Members
+
+@waterfogSW
+@rilac1
+@jinHur
+
