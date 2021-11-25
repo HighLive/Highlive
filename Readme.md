@@ -8,3 +8,6 @@ http://3.38.119.154:8080/
 - pandas
 - matplotlib
 - requests
+
+## Implementation
+![image](https://user-images.githubusercontent.com/28651727/143439790-9d71db92-7e9e-4497-ae50-5f588c096ead.png)
