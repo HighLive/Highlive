@@ -40,5 +40,5 @@ ex) https://www.twitch.tv/videos/1210752959
 
 - waterfogSW(FE/BE)
 - rilac1(FE/BE)
-- jinHur(FE/BE)
+- JINs-software(FE/BE)
 
