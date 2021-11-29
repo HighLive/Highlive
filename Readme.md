@@ -37,8 +37,9 @@ ex) https://www.twitch.tv/videos/1210752959
 5. 편집자 개입없이 분석된 데이터를 토대로 추출된 하이라이트 구간을 모아 사용자에게 제공하는 자동 편집 기능 추가
 
 ## Members
-
-- San Kim [waterfogSW](https://github.com/waterfogSW)
-- Jung Hyun Kang[rilac1](https://github.com/rilac1)
-- Jin Hur [JINs-software](https://github.com/JINs-software)
-- Woon Jun Lee [copiCat0](https://github.com/copiCat0)
+|Name | Git |
+|-----|-----|
+|San Kim |[waterfogSW](https://github.com/waterfogSW)|
+|Jung Hyun Kang |[rilac1](https://github.com/rilac1)|
+|Jin Hur | [JINs-software](https://github.com/JINs-software)|
+|Woon Jun Lee | [copiCat0](https://github.com/copiCat0)|
