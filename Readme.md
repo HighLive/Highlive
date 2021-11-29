@@ -41,4 +41,4 @@ ex) https://www.twitch.tv/videos/1210752959
 - [waterfogSW](https://github.com/waterfogSW)
 - [rilac1](https://github.com/rilac1)
 - [JINs-software](https://github.com/JINs-software)
-- [WonjunLee](https://github.com/WonjunLee)
+- [WonjunLee](https://github.com/copiCat0)
