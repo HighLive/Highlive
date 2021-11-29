@@ -38,7 +38,7 @@ ex) https://www.twitch.tv/videos/1210752959
 
 ## Members
 
-- [waterfogSW](https://github.com/waterfogSW)
-- [rilac1](https://github.com/rilac1)
-- [JINs-software](https://github.com/JINs-software)
-- [copiCat0](https://github.com/copiCat0)
+- San Kim [waterfogSW](https://github.com/waterfogSW)
+- Jung Hyun Kang[rilac1](https://github.com/rilac1)
+- Jin Hur [JINs-software](https://github.com/JINs-software)
+- Woon Jun Lee [copiCat0](https://github.com/copiCat0)
