@@ -38,6 +38,6 @@ ex) https://www.twitch.tv/videos/1210752959
 |Name | Git |
 |-----|-----|
 |San Kim |[waterfogSW](https://github.com/waterfogSW)|
-|Jung Hyun Kang |[rilac1](https://github.com/rilac1)|
+|Jeong Hyun Kang |[rilac1](https://github.com/rilac1)|
 |Jin Hur | [JINs-software](https://github.com/JINs-software)|
 |Woon Jun Lee | [copiCat0](https://github.com/copiCat0)|
