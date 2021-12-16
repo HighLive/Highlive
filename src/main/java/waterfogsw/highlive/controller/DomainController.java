@@ -69,6 +69,10 @@ public class DomainController {
             inputHandler.runClassifyEmotion(video_id);
             // 트래픽 추출
             inputHandler.runFindHighlight(video_id);
+
+            // 차후 선택적 수행으로 변경
+            // 동영상 추출
+            inputHandler.runVideoExtraction(video_id);
         }
         else
             System.out.println("cache hit!");

@@ -8,3 +8,5 @@ class Path(Enum):
     emotion = "./python/Data/emotion_data/"
     valid = "./python/Data/valid_data/"
     graph = "./python/Data/graph_data/"
+    preprocess = "./python/Data/preprocess_data/"
+    videos = "./python/Data/videos/"
